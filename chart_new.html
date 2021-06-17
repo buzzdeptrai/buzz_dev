@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+</head>
+<body>
+    
+
+    <div class="container">
+        <div class="row">
+            <h1>Hello content</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="col-sm">
+                
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                
+                <canvas id="chartBar"></canvas>
+            </div>
+            <div class="col-sm">
+                
+                <canvas id="2"></canvas>
+            </div>
+        </div>
+
+    </div>
+   
+
+
+    <script>
+        const labelsBar = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+        const dataBar = {
+            labels: labelsBar,
+            datasets: [{
+                label: 'My First Dataset',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                // backgroundColor: [
+                //     'rgba(255, 99, 132, 0.2)',
+                //     'rgba(255, 159, 64, 0.2)',
+                //     'rgba(255, 205, 86, 0.2)',
+                //     'rgba(75, 192, 192, 0.2)',
+                //     'rgba(54, 162, 235, 0.2)',
+                //     'rgba(153, 102, 255, 0.2)'
+                // ],
+                // borderColor: [
+                //     'rgb(255, 99, 132)',
+                //     'rgb(255, 159, 64)',
+                //     'rgb(255, 205, 86)',
+                //     'rgb(75, 192, 192)',
+                //     'rgb(54, 162, 235)',
+                //     'rgb(153, 102, 255)'
+                // ],
+                borderWidth: 1
+            }]
+        };
+
+        const configBar = {
+            type: 'bar',
+            data: dataBar,
+            options: {
+                scales: {
+                y: {
+                    beginAtZero: true
+                }
+                }
+            },
+        };
+
+        var barChart = new Chart(
+            document.getElementById('barChart'),
+            configBar
+        );
+        
+
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+        let width, height, gradient;
+        function getGradient(ctx, chartArea) {
+            const chartWidth = chartArea.right - chartArea.left;
+            const chartHeight = chartArea.bottom - chartArea.top;
+            if (gradient === null || width !== chartWidth || height !== chartHeight) {
+                // Create the gradient because this is either the first render
+                // or the size of the chart has changed
+                width = chartWidth;
+                height = chartHeight;
+                gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                
+                // gradient.addColorStop(0, '#0000FF');
+                // gradient.addColorStop(0.5, '#FFFF00');
+                // gradient.addColorStop(1, '#FF0000');
+
+                gradient.addColorStop(0, 'rgba(255, 0,0, 0.2)');
+                gradient.addColorStop(0.5, 'rgba(255, 0, 0, 0.35)');
+                gradient.addColorStop(1, 'rgba(255, 0, 0, 0.75)');
+            }
+
+            return gradient;
+        }
+
+       
+
+
+        // const data = {
+        //     labels: labels,
+        //     datasets: [{
+        //         label: 'My First dataset',
+        //         backgroundColor: 'rgb(255, 99, 132)',
+        //         borderColor: 'rgb(255, 99, 132)',
+        //         data: [0, 10, 5, 2, 20, 30, 45],
+        //     },{
+        //         label: 'custom',
+        //         backgroundColor: 'rgb(255, 205, 86)',
+        //         borderColor: 'rgb(255, 205, 86)',
+        //         data: [13, 25, 46, 12, 30, 90, 145],
+        //     }]
+        // };
+
+
+
+        const labelsv2 = ['January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June','BUZZ'
+        ];
+
+        const datav2 = {
+            labels: labelsv2,
+            datasets: [
+                {
+                    
+                    //backgroundColor: "#F5DEB3",
+                    label: 'Dataset 1',
+                    data: [24, 18, 16, 18, 24, 36, 28],
+                    borderColor: function (context) {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+
+                        if (!chartArea) {
+                            // This case happens on initial chart load
+                            return null;
+                        }
+                        return getGradient(ctx, chartArea);
+                    },
+                    
+                },
+            ]
+        };
+        
+        // const config = {
+        //     type: 'line',
+        //     data,
+        //     options: {}
+        // };
+
+        const config = {
+            type: 'line',
+            data: datav2,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            },
+        };
+
+        var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+
+    </script>
+</body>
+</html>
